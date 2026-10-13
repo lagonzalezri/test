@@ -1,0 +1,243 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Membresía al Círculo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: una sola columna estrecha, una pregunta por pantalla; resultado como carnet de membresía. */
+:root {
+  --bg: #f1f2f6;
+  --surface: #ffffff;
+  --fg: #1c2232;
+  --muted: #586179;
+  --line: #d6d9e3;
+  --accent: #5a3a8a;
+  --accent-fg: #ffffff;
+  --silver: #3d6c76;
+  --tint: #ece8f5;
+  --display: "Bodoni Moda", "Didot", Georgia, serif;
+  --body: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11141c; --surface: #191d28; --fg: #e8eaf2; --muted: #9aa2b6; --line: #2b3144;
+    --accent: #b99cf2; --accent-fg: #15101f; --silver: #86bcc6; --tint: #261f38;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11141c; --surface: #191d28; --fg: #e8eaf2; --muted: #9aa2b6; --line: #2b3144;
+  --accent: #b99cf2; --accent-fg: #15101f; --silver: #86bcc6; --tint: #261f38;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.55;
+  padding-inline: 16px; padding-block: 28px 48px;
+}
+main { max-width: 40rem; margin-inline: auto; display: flex; flex-direction: column; gap: 20px; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.15; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2rem, 7vw, 2.9rem); }
+h2 { font-size: clamp(1.4rem, 4.6vw, 1.85rem); font-weight: 500; }
+h3 { font-size: 1.15rem; }
+p { margin: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
+.muted { color: var(--muted); }
+.small { font-size: 0.88rem; }
+.btn {
+  font: inherit; font-weight: 600; cursor: pointer; border-radius: 4px; padding: 12px 18px; border: 1px solid var(--accent);
+  background: var(--accent); color: var(--accent-fg); align-self: flex-start;
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:focus-visible, .opt:focus-visible, summary:focus-visible { outline: 3px solid var(--silver); outline-offset: 2px; }
+.ticks { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+.tick { height: 5px; background: var(--line); border-radius: 1px; }
+.tick.done { background: var(--accent); }
+.tick.now { background: var(--silver); }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt {
+  font: inherit; text-align: left; cursor: pointer; display: grid; grid-template-columns: 1.6rem 1fr; gap: 10px;
+  background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: 13px 14px;
+}
+.opt:hover { border-color: var(--accent); background: var(--tint); }
+.opt.sel { border-color: var(--accent); background: var(--tint); }
+.opt .l { font-family: var(--display); font-weight: 700; color: var(--accent); }
+.nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.link { font: inherit; background: none; border: 0; color: var(--muted); cursor: pointer; text-decoration: underline; padding: 6px 0; }
+.link:disabled { opacity: 0.4; cursor: default; text-decoration: none; }
+.badge { align-self: flex-start; border: 1px solid var(--accent); color: var(--accent); border-radius: 3px; padding: 3px 9px; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.pcard { border-top: 4px solid var(--accent); }
+.pcard .tag { color: var(--silver); font-style: italic; }
+.sec { display: flex; flex-direction: column; gap: 4px; }
+.sec b { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar { display: grid; grid-template-columns: minmax(0, 9.5rem) 1fr 2.2rem; gap: 10px; align-items: center; font-size: 0.9rem; }
+.track { height: 9px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.fill { height: 100%; background: var(--silver); }
+.fill.top { background: var(--accent); }
+.bar span:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.thermo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.thermo div { border: 1px solid var(--line); padding: 8px 6px; text-align: center; font-size: 0.82rem; border-radius: 3px; color: var(--muted); }
+.thermo div.on { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 600; }
+details { border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px; background: var(--surface); }
+summary { cursor: pointer; font-weight: 600; }
+details ul { margin: 12px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.note { border-left: 3px solid var(--silver); padding-left: 12px; }
+@media (max-width: 440px) { .bar { grid-template-columns: minmax(0, 7rem) 1fr 2rem; } .card { padding: 18px; } }
+@media (prefers-reduced-motion: no-preference) { .fill { transition: width 0.5s ease; } }
+</style>
+
+<main id="app"></main>
+
+<script>
+var P = {
+  EV: { n: "El Evitador", s: "El vestíbulo", tag: "Se queda en la puerta, donde la muerte es la gran aguafiestas.",
+    r: "Tu relación con la muerte pasa por la distancia. Cambias de tema, bromeas para no sentir o dejas que otros se ocupen. Rara vez es frialdad: suele ser una forma de protegerte de la angustia.",
+    c: "En Maupassant, es quien no pasa del vestíbulo: la Obra existe para que nadie tenga que mirar la muerte, y su secretario la llama aguafiestas de la tierra. En Han, la sociedad de la producción está dominada por el miedo a morir, y acumular y rendir serían maneras de no mirarla.",
+    t: "Hablar de la muerte la atrae, el dolor ajeno no se toca, la muerte es de mal gusto, eso es asunto íntimo.",
+    q: "¿Qué pasaría en este salón si habláramos del tema abiertamente?" },
+  RI: { n: "El Ritualista", s: "La galería de vitrales", tag: "Necesita forma, lugar y gesto compartido para despedir.",
+    r: "Crees que la pérdida necesita cauce: un tiempo, un lugar y un gesto reconocible. Sin eso, el duelo queda suelto y sin dónde apoyarse.",
+    c: "Para Han, las sociedades arcaicas regulaban los tránsitos entre vida y muerte con ritos iniciáticos y sacrificiales, y así la muerte seguía siendo parte de la vida. Maupassant muestra el riesgo contrario: una galería bellamente decorada cuya forma ya no tiene sentido simbólico.",
+    t: "La forma como contención, la nostalgia de lo tradicional y el temor a que un duelo sin protocolo se vuelva desorden.",
+    q: "¿Qué ritual echamos de menos y cuál se ha vuelto solo decorado?" },
+  PR: { n: "El Pragmático Productivo", s: "La oficina de madera negra", tag: "Gestiona la muerte como un trámite que debe salir bien.",
+    r: "Tratas la muerte como un asunto a resolver con orden: trámites hechos, costos claros y la menor carga posible para otros. Es una forma de cuidado, y también de control.",
+    c: "Eres el secretario eficiente de la Obra, que organiza, cobra y estandariza. En Han, es la vida sometida a la salud, la optimización y el rendimiento, que se parece más a sobrevivir que a vivir.",
+    t: "El duelo debe ser breve y funcional, la emoción estorba a la logística, sentimentalizar es perder tiempo. Detrás puede haber miedo a perder el control.",
+    q: "¿Qué se pierde cuando el duelo se vuelve trámite?" },
+  OC: { n: "El Observador Crítico", s: "El balcón sobre el Sena", tag: "Lee el síntoma social antes que la emoción propia.",
+    r: "Piensas la muerte desde la distancia analítica y ves primero lo que dice de la sociedad. Tu riesgo es que la lucidez se convierta en coartada para no sentir.",
+    c: "Eres el narrador de Maupassant: miras la Obra con ironía y despiertas con el ahogado real a orillas del Sena. Con Han compartes la lectura de época: el suicidio explicado por la psicología individual, el juego reducido a tiempo libre, el sujeto que se explota a sí mismo.",
+    t: "La intelectualización como defensa, la creencia de que entender basta, cierta desconfianza hacia lo emocional y lo ritual.",
+    q: "¿Qué hacemos con lo que vemos, además de verlo?" },
+  CO: { n: "El Doliente Comunitario", s: "El salón de las conversaciones", tag: "Cree que el duelo no se hace a solas.",
+    r: "Sientes que la pérdida se elabora con otros: que estén, hablen y recuerden contigo. Tu fortaleza es el acompañamiento. Tu riesgo es depender demasiado del grupo.",
+    c: "Eres lo contrario de los solitarios del cuarto de hotel con que abre Maupassant. En Han, es la reciprocidad entre vida y muerte frente al sujeto aislado del régimen neoliberal. Maupassant añade la contracara irónica: un círculo, sí, pero cerrado y clasista.",
+    t: "Sufrir en soledad es indigno, el duelo se comparte. Puede haber incomodidad ante quien prefiere vivirlo en privado.",
+    q: "¿Quién queda fuera de nuestra comunidad de duelo?" },
+  SO: { n: "El Jugador Sereno", s: "La sala de juego", tag: "Integra la muerte sin evitarla ni administrarla.",
+    r: "Hablas de la muerte con naturalidad, usas el humor y te preguntas qué vale la pena. Tu riesgo es banalizar el dolor ajeno o confundir serenidad con distancia.",
+    c: "Te acercas al juego fuerte y a la soberanía que Han toma de Bataille: vivir con intensidad más allá de la utilidad y la mera supervivencia, y a la fiesta como intercambio simbólico con la muerte. Maupassant, además, se ríe de quienes solo aparentan esa serenidad por moda.",
+    t: "No es una ausencia total de tabú. Hay que distinguir serenidad genuina de bravuconería o indiferencia. Han presenta el suicidio soberano como una posición de Foucault y Schroeter, no como un ideal, y muchos duelos reales se viven con miedo, lo cual está bien.",
+    q: "¿Dónde termina la serenidad y empieza la indiferencia?" }
+};
+var ORDER = ["EV", "RI", "PR", "OC", "CO", "SO"];
+
+var Q = [
+  ["Muere un conocido de tu generación. Tu primer impulso es…", [["Mandar un mensaje corto y evitar el velorio porque no sabrías qué decir.", "EV"], ["Averiguar cuál es la ceremonia y asistir.", "RI"], ["Preguntar qué necesita la familia: trámites, comida, logística.", "PR"], ["Ir y quedarte con el grupo de amigos después.", "CO"]]],
+  ["En una reunión familiar alguien menciona al abuelo fallecido y el ambiente se tensa. Tú…", [["Cambias el tema con una broma o una pregunta ligera.", "EV"], ["Propones recordarlo con fotos y anécdotas.", "CO"], ["Observas quién calla, quién habla y qué evita cada uno.", "OC"], ["Hablas con naturalidad. Para ti es parte de la vida.", "SO"]]],
+  ["Imagina, de forma hipotética, que organizas tu propia despedida. Preferirías…", [["Debatir antes qué dice la forma actual de los funerales sobre nuestra época.", "OC"], ["Una ceremonia con ritos y tradiciones que marquen el paso.", "RI"], ["Algo sencillo, económico y con todo resuelto para no cargar a nadie.", "PR"], ["Una reunión festiva con música, comida y relatos.", "SO"]]],
+  ["Un compañero de clase vuelve tras una semana de duelo. Lo más apropiado sería…", [["No mencionarlo, para no incomodarlo.", "EV"], ["Un protocolo claro de reintegro, con plazos y apoyos académicos.", "PR"], ["Un gesto colectivo: una tarjeta del grupo o un almuerzo juntos.", "CO"], ["Preguntarte por qué el duelo cabe en una semana de licencia.", "OC"]]],
+  ["Para ti, “vivir bien” se parece más a…", [["Cuidar la salud, las rutinas y el rendimiento.", "PR"], ["Vivir momentos intensos que valgan la pena aunque no “rindan”.", "SO"], ["Sostener tradiciones, fechas y comidas compartidas.", "RI"], ["Estar rodeado de las personas que quiero.", "CO"]]],
+  ["Una funeraria ofrece una “despedida exprés”: trámite virtual, cremación en 24 horas y sin ceremonia. Reaccionas…", [["“Práctico y razonable.”", "PR"], ["“Qué alivio, no tendría que enfrentar todo eso.”", "EV"], ["“Se pierde algo esencial: hace falta un tiempo y un lugar para despedir.”", "RI"], ["“Es un síntoma: la muerte convertida en un servicio más.”", "OC"]]],
+  ["Una ciudad propone sacar hospitales y cementerios de la zona urbana “para no afectar el ánimo”. Tú…", [["Apoyas: la muerte no debería verse en el día a día.", "EV"], ["Dices que depende de la eficiencia y del costo.", "PR"], ["Dices que ocultar la muerte empobrece a la comunidad, que debería estar presente.", "CO"], ["Dices que cuanto más cerca esté de lo cotidiano, menos miedo da.", "SO"]]],
+  ["Sobre el humor ante la muerte…", [["Hago chistes cuando me pongo nervioso con el tema.", "EV"], ["El humor negro es una forma sana de convivir con ella.", "SO"], ["Hay momentos para reír y momentos para el silencio, y el rito marca cuál es cuál.", "RI"], ["Me interesa qué intenta ocultar quien hace el chiste.", "OC"]]],
+  ["Cuando la sociedad habla del suicidio de alguien (en general, no en tu entorno), lo que más te llama la atención es…", [["El silencio incómodo y el cambio de tema.", "EV"], ["La tendencia a explicarlo todo por lo individual: “andaba mal”, “la familia falló”.", "OC"], ["La falta de conversación abierta, sin eufemismos, sobre la muerte desde temprano.", "SO"], ["La falta de espacios comunitarios que acompañen a quienes quedan.", "CO"]]],
+  ["Cuando piensas que tu tiempo es limitado…", [["Sospecho que esa urgencia por “aprovecharlo” ya es un síntoma de época.", "OC"], ["Planifico y optimizo para rendir al máximo.", "PR"], ["Me ayuda a priorizar lo que importa, aunque no sea productivo.", "SO"], ["Siento que necesito pausas y cierres de ciclo, o vivo en aceleración perpetua.", "RI"]]],
+  ["Terminas un ciclo importante (graduación, mudanza). Lo normal en ti es…", [["Seguir con lo que viene sin pausa.", "PR"], ["Hacer un ritual de cierre: una cena, una carta, una ceremonia.", "RI"], ["Vivirlo con mi gente. No me imagino cerrando un ciclo solo.", "CO"], ["Que las cosas se diluyan sin despedidas formales.", "EV"]]],
+  ["Un amigo propone celebrar el cumpleaños de una persona fallecida con su comida y su música favoritas. Tú…", [["Lo ves como una forma de mantenerla viva en la comunidad.", "CO"], ["Te preguntas si se hace por ella o por nosotros.", "OC"], ["Lo aceptas si hay un orden y un sentido compartido, no solo improvisación.", "RI"], ["Lo ves natural: muerte y fiesta nunca estuvieron tan separadas.", "SO"]]]
+];
+
+var app = document.getElementById("app");
+var state = { i: -1, ans: [], order: [] };
+
+function shuffle(a) {
+  var b = a.slice();
+  for (var k = b.length - 1; k > 0; k--) {
+    var j = Math.floor(Math.random() * (k + 1));
+    var t = b[k]; b[k] = b[j]; b[j] = t;
+  }
+  return b;
+}
+function el(html) { app.innerHTML = html; window.scrollTo(0, 0); }
+
+function start() {
+  el(
+    '<div class="eyebrow">Muerte, duelo y venganza · Han y Maupassant</div>' +
+    '<h1>Membresía al Círculo</h1>' +
+    '<div class="card">' +
+    '<p>En el relato de Maupassant, la Obra recibe a quien quiere acercarse a la muerte sin miedo y la vuelve limpia, dulce y elegante. Responde 12 situaciones y descubre en qué salón de la Obra te sentarías.</p>' +
+    '<p class="muted small">Es una actividad académica con tipos ideales, no un diagnóstico ni una prueba validada. Las respuestas no se guardan ni se envían. Puedes dejar de responder cuando quieras, y si algún tema te afecta, busca apoyo en Bienestar Universitario de tu sede.</p>' +
+    '<button class="btn" id="go">Entrar al Círculo</button>' +
+    '</div>'
+  );
+  document.getElementById("go").onclick = function () {
+    state = { i: 0, ans: [], order: Q.map(function (q) { return shuffle([0, 1, 2, 3]); }) };
+    question();
+  };
+}
+
+function question() {
+  var q = Q[state.i], ord = state.order[state.i], sel = state.ans[state.i];
+  var ticks = "";
+  for (var k = 0; k < 12; k++) ticks += '<div class="tick ' + (k < state.i ? "done" : k === state.i ? "now" : "") + '"></div>';
+  var opts = "";
+  ord.forEach(function (idx, pos) {
+    opts += '<button class="opt' + (sel === idx ? " sel" : "") + '" data-idx="' + idx + '"><span class="l">' + "abcd"[pos] + '</span><span>' + q[1][idx][0] + '</span></button>';
+  });
+  el(
+    '<div class="eyebrow">Pregunta ' + (state.i + 1) + ' de 12</div>' +
+    '<div class="ticks" aria-hidden="true">' + ticks + '</div>' +
+    '<div class="card"><h2>' + q[0] + '</h2><div class="opts">' + opts + '</div></div>' +
+    '<div class="nav"><button class="link" id="back"' + (state.i === 0 ? " disabled" : "") + '>Anterior</button>' +
+    '<button class="link" id="restart">Reiniciar</button></div>'
+  );
+  Array.prototype.forEach.call(document.querySelectorAll(".opt"), function (b) {
+    b.onclick = function () {
+      state.ans[state.i] = parseInt(b.getAttribute("data-idx"), 10);
+      b.classList.add("sel");
+      setTimeout(function () {
+        if (state.i < 11) { state.i++; question(); } else { result(); }
+      }, 220);
+    };
+  });
+  document.getElementById("back").onclick = function () { if (state.i > 0) { state.i--; question(); } };
+  document.getElementById("restart").onclick = start;
+}
+
+function profileCard(code, hybrid) {
+  var p = P[code];
+  return '<div class="card pcard">' +
+    (hybrid ? '<span class="badge">Perfil híbrido</span>' : '<span class="badge">Tu salón</span>') +
+    '<div><h2>' + p.n + '</h2><p class="tag">' + p.s + '. ' + p.tag + '</p></div>' +
+    '<div class="sec"><b>Qué revela</b><p>' + p.r + '</p></div>' +
+    '<div class="sec"><b>Conexión con Han y Maupassant</b><p>' + p.c + '</p></div>' +
+    '<div class="sec"><b>Tabúes y creencias que podrían influir</b><p>' + p.t + '</p></div>' +
+    '<div class="sec note"><b>Para conversar</b><p>' + p.q + '</p></div>' +
+    '</div>';
+}
+
+function result() {
+  var cnt = { EV: 0, RI: 0, PR: 0, OC: 0, CO: 0, SO: 0 };
+  Q.forEach(function (q, k) { cnt[q[1][state.ans[k]][1]]++; });
+  var max = Math.max.apply(null, ORDER.map(function (c) { return cnt[c]; }));
+  var leaders = ORDER.filter(function (c) { return cnt[c] === max; });
+  var hybrid = leaders.length > 1;
+  var bars = ORDER.map(function (c) {
+    return '<div class="bar"><span>' + P[c].n + '</span><div class="track"><div class="fill' + (cnt[c] === max ? " top" : "") + '" style="width:' + Math.round(cnt[c] / 12 * 100) + '%"></div></div><span>' + cnt[c] + '</span></div>';
+  }).join("");
+  var ev = cnt.EV, lvl = ev <= 2 ? 0 : ev <= 5 ? 1 : 2;
+  var thermo = ["Evitación baja (0-2)", "Evitación moderada (3-5)", "Evitación alta (6 o más)"].map(function (t, k) {
+    return '<div class="' + (k === lvl ? "on" : "") + '">' + t + '</div>';
+  }).join("");
+  var all = ORDER.map(function (c) { return '<li><b>' + P[c].n + '</b> <span class="muted">· ' + P[c].s + '</span><br><span class="small">' + P[c].tag + '</span></li>'; }).join("");
+  el(
+    '<div class="eyebrow">Carnet de membresía</div>' +
+    '<h1>' + (hybrid ? "Tienes un perfil híbrido" : "Eres " + P[leaders[0]].n) + '</h1>' +
+    leaders.map(function (c) { return profileCard(c, hybrid); }).join("") +
+    '<div class="card"><h3>Tus puntos por salón</h3><div class="bars">' + bars + '</div>' +
+    '<h3>Termómetro de evitación</h3><div class="thermo">' + thermo + '</div>' +
+    '<p class="muted small">Cuenta tus respuestas del Evitador, sin importar cuál sea tu salón dominante. Los perfiles son tipos ideales y casi nadie es uno puro.</p></div>' +
+    '<details><summary>Ver los seis salones de la Obra</summary><ul>' + all + '</ul></details>' +
+    '<div class="card"><p>Al final del relato, el narrador despierta junto al Sena y todo el salón se desvanece. Este test funciona igual: es cómodo y entretenido. La pregunta para la clase es si jugar así nos acerca a la muerte o nos ayuda a no pensarla.</p>' +
+    '<button class="btn ghost" id="again">Volver a empezar</button></div>'
+  );
+  document.getElementById("again").onclick = start;
+}
+
+start();
+</script>
+
+</body></html>
